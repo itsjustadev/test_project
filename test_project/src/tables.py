@@ -4,8 +4,19 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 import pytz
 from sqlalchemy.sql.sqltypes import DateTime
 from datetime import datetime
+import psycopg2
+from dotenv import load_dotenv
+import os
 
-engine = create_engine('sqlite:///bot_openai.db')
+load_dotenv()
+username = str(os.getenv('USERNAME'))
+password = str(os.getenv('PASSWORD'))
+host = str(os.getenv('HOST'))
+port = str(os.getenv('PORT'))
+database = str(os.getenv('DATABASE'))
+
+connection_string = f'postgresql+psycopg2://{username}:{password}@{host}:{port}/{database}'
+engine = create_engine(connection_string)
 
 Base = declarative_base()
 
